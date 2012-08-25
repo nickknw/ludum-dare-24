@@ -6,6 +6,7 @@ package {
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Stamp;
 	import net.flashpunk.utils.Draw;
+	import net.flashpunk.utils.Input;
 	
 	public class BoardEntity extends Entity	{
 		
@@ -23,7 +24,7 @@ package {
 		private var boardData:Array;
 		
 		public function BoardEntity() {
-			setHitbox(boardWidth, boardHeight, 0, heightOffset);
+			setHitbox(boardWidth, boardHeight, 0, -heightOffset);
 			
 			// score per enemy eliminated?
 			initializeBoardData();
@@ -49,6 +50,13 @@ package {
 		}
 		
 		override public function update():void {
+			// look for clicks
+			if (collidePoint(x, y, world.mouseX, world.mouseY) && Input.mouseDown) {
+				var point = determineArrayIndexes(world.mouseX, world.mouseY);
+				boardData[point.x][point.y] = 1; // only allow one player for now
+			}
+			
+			// do grid logic
 			if ((periodicUpdate == 0 && !Main.paused) || Main.stepAheadOneIteration) {
 				boardData = Logic.doIteration(boardData);
 			}
@@ -56,6 +64,13 @@ package {
 				Main.stepAheadOneIteration = false;
 			}
 			periodicUpdate = (periodicUpdate + 1) % sixTimesASecond;
+		}
+		
+		private static function determineArrayIndexes(mouseX:int, mouseY:int):Object {
+			var xIndex:int = Math.floor(mouseX / cellSize) + 1;
+			var yIndex:int = Math.floor((mouseY - heightOffset) / cellSize) + 1;
+
+			return { x: xIndex, y: yIndex };
 		}
 		
 		override public function render():void {
