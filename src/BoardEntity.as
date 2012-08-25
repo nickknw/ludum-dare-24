@@ -28,8 +28,12 @@ package {
 				
 				boardData[i] = new Array(boardHeight / cellSize + borderOfEmptyCells);
 				for (var j:int = 0; j < boardData[i].length; j++) {
-					var player:int = Math.floor(Math.random() * 4);
-					boardData[i][j] = player;
+					if (i == 0 || j == 0 || i == boardData.length - 1 || j == boardData[i].length - 1) {
+						boardData[i][j] = 0;
+					} else {
+						var player:int = Math.floor(Math.random() * 4);
+						boardData[i][j] = player;
+					}
 				}
 			}
 		}
