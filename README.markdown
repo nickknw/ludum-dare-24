@@ -1,7 +1,8 @@
-Ludum Dare 24 entry: Evolution
+Ludum Dare 24 entry: Conway's Revenge
 ===
 
 This is my entry for Ludum Dare #24, with the theme of **evolution**. 
 
-As work progresses, I'll update this readme with more information about the
-game, as well as a title!
+This game is essentially a multiplayer Conway's Game of Life clone.
+
+I have plans to progress it beyond that but... we'll see how far I get.
