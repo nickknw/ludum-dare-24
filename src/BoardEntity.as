@@ -31,7 +31,7 @@ package {
 					if (i == 0 || j == 0 || i == boardData.length - 1 || j == boardData[i].length - 1) {
 						boardData[i][j] = 0;
 					} else {
-						var player:int = Math.floor(Math.random() * 4);
+						var player:int = Math.floor(Math.random() * GameWorld.players.length);
 						boardData[i][j] = player;
 					}
 				}
