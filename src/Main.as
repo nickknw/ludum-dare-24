@@ -7,7 +7,10 @@ package {
 		
 		public static var screenWidth:int = 800;
 		public static var screenHeight:int = 600;
-		public static var framerate:int = 8;
+		public static var framerate:int = 60;
+		
+		public static var paused:Boolean = false;
+		public static var stepAheadOneIteration = false;
 		
 		public function Main():void {
 			 super(screenWidth, screenHeight, framerate, false);
