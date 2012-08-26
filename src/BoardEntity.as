@@ -40,8 +40,12 @@ package {
 				boardWidth / cellSize + borderOfEmptyCells,
 				boardHeight / cellSize + borderOfEmptyCells,
 				function (i:int, j:int):int {
-					//return 0;
-					return Math.floor(Math.random() * GameWorld.players.length);
+					// should be empty more than half the time
+					if (Math.random() < .5) {
+						return 0;
+					} else {
+						return Math.floor(Math.random() * GameWorld.players.length);
+					}
 				});
 		}
 		

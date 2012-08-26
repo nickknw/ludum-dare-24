@@ -22,7 +22,7 @@ package
 			background = new Entity(0, 0, new Stamp(backgroundImage));
 			
 			playPauseButton = new Button(0, 0, 40, 40);
-			playPauseButton.setImage(pauseImage);
+			playPauseButton.setImage(playImage);
 			playPauseButton.click = function ():void {
 				Main.paused = !Main.paused;
 				
@@ -36,7 +36,7 @@ package
 			};	
 			
 			stepButton = new Button(40, 0, 40, 40);
-			stepButton.setImage(stepDisabledImage);
+			stepButton.setImage(stepImage);
 			stepButton.click = function ():void {
 				Main.stepAheadOneIteration = true;
 			}

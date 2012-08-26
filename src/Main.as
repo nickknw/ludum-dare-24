@@ -9,7 +9,7 @@ package {
 		public static var screenHeight:int = 600;
 		public static var framerate:int = 60;
 		
-		public static var paused:Boolean = false;
+		public static var paused:Boolean = true;
 		public static var stepAheadOneIteration:Boolean = false;
 		
 		public function Main():void {
