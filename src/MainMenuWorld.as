@@ -32,6 +32,7 @@ package {
 			campaignText.font = "Fixedsys Excelsior";
 			campaignText.size = 64;
 			campaignButton.graphic = campaignText;
+			campaignButton.enabled = false;
 			add(campaignButton);
 			
 			

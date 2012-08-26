@@ -55,7 +55,7 @@ package
 				Main.reset = true;
 			};
 			
-			menuButton = new Button(700, 0, 100, 40);
+			menuButton = new Button(700, 0, 75, 40);
 			var menuText:Text = new Text("Menu");
 			menuText.color = 0x000000;
 			menuText.font = "Fixedsys Excelsior";
