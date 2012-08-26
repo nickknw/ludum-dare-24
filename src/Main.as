@@ -11,6 +11,7 @@ package {
 		
 		public static var paused:Boolean = true;
 		public static var stepAheadOneIteration:Boolean = false;
+		public static var reset = false;
 		
 		public function Main():void {
 			 super(SCREEN_WIDTH, SCREEN_HEIGHT, FRAMERATE, false);

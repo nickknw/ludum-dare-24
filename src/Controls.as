@@ -4,6 +4,8 @@ package
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Stamp;
+	import net.flashpunk.graphics.Text;
+	import net.flashpunk.FP;
 	
 	public class Controls extends Entity
 	{
@@ -15,6 +17,8 @@ package
 		private var background:Entity;
 		private var playPauseButton:Button;
 		private var stepButton:Button;
+		private var resetButton:Button;
+		private var menuButton:Button;
 		
 		public function Controls() 
 		{
@@ -41,10 +45,29 @@ package
 				Main.stepAheadOneIteration = true;
 			}
 			
+			resetButton = new Button(350, 0, 100, 40);
+			var resetText:Text = new Text("Reset");
+			resetText.color = 0x000000;
+			resetText.font = "Fixedsys Excelsior";
+			resetText.size = 36;
+			resetButton.graphic = resetText;
+			resetButton.click = function ():void {
+				Main.reset = true;
+			};
+			
+			menuButton = new Button(700, 0, 100, 40);
+			var menuText:Text = new Text("Menu");
+			menuText.color = 0x000000;
+			menuText.font = "Fixedsys Excelsior";
+			menuText.size = 36;
+			menuButton.graphic = menuText;
+			menuButton.click = function ():void {
+				FP.world = new MainMenuWorld;
+			}
 		}
 		
 		public function list():Array {
-			return [background, playPauseButton, stepButton];
+			return [background, playPauseButton, stepButton, resetButton, menuButton];
 		}
 		
 	}

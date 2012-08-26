@@ -74,6 +74,13 @@ package {
 				}
 			}
 			
+			// check for reset
+			if (Main.reset) {
+				Main.reset = false;
+				Main.paused = true;
+				boardData = initializeBoardData();
+			}
+			
 			// do grid logic
 			if ((periodicUpdate == 0 && !Main.paused) || Main.stepAheadOneIteration) {
 				boardData = Logic.doIteration(boardData);
