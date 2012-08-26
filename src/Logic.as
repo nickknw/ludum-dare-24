@@ -21,7 +21,11 @@ package
 						totalNeighbours:int = getTotalNeighbours(neighbours),
 						strongestPlayer:Object = getLocallyStrongestPlayer(neighbours, totalCellsPerPlayer);
 					
-					if ((totalNeighbours >= 3 && totalNeighbours <= 5) && strongestPlayer.count > 2) {
+					if (strongestPlayer.count <= 2) {
+						return 0;
+					} else if (totalNeighbours >= 2 && totalNeighbours <= 5) {
+						return strongestPlayer.player;
+					} else if (totalNeighbours > 5 && strongestPlayer.count < 5) { // make border conflicts more interesting and resolve faster
 						return strongestPlayer.player;
 					} else {
 						return 0;
@@ -100,12 +104,10 @@ package
 					// I don't like bringing whole-board state into this, but with multiple players it
 					// has a definite tendency to get into a stalemate situation where nobody is making progress.
 					// There needs to be a bit of slippery slope for the game to have a winner.
-					// I'm addressing this by giving the stronger player a better chance to win ties.
-					var newCountPercentage:Number = newCount / (newCount + oldCount),
-						diffFromEven:Number = newCountPercentage - .5,
-						chanceForNewCountToWin:Number = newCountPercentage + (diffFromEven * .5); // make the slope half again as slippery
+					// I'm addressing this by giving the stronger player all of the ties.
+					var newCountPercentage:Number = newCount / (newCount + oldCount);
 					
-					if (Math.random() < chanceForNewCountToWin) {
+					if (newCountPercentage >= .5) {
 						strongestPlayer = { player: playerNum, count: newCount };
 					} 
 				}
