@@ -15,7 +15,7 @@ package {
 		public function Main():void {
 			 super(SCREEN_WIDTH, SCREEN_HEIGHT, FRAMERATE, false);
 			 
-			 FP.world = new GameWorld;
+			 FP.world = new MainMenuWorld;
 		}
 	
 		 override public function init():void { 
