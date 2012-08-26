@@ -5,15 +5,15 @@ package {
 	
 	public class Main extends Engine {
 		
-		public static var screenWidth:int = 800;
-		public static var screenHeight:int = 600;
-		public static var framerate:int = 60;
+		public static const SCREEN_WIDTH:int = 800;
+		public static const SCREEN_HEIGHT:int = 600;
+		public static const FRAMERATE:int = 60;
 		
 		public static var paused:Boolean = true;
 		public static var stepAheadOneIteration:Boolean = false;
 		
 		public function Main():void {
-			 super(screenWidth, screenHeight, framerate, false);
+			 super(SCREEN_WIDTH, SCREEN_HEIGHT, FRAMERATE, false);
 			 
 			 FP.world = new GameWorld;
 		}

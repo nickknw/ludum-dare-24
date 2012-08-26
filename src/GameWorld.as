@@ -4,9 +4,6 @@ package {
 		
 	public class GameWorld extends World {
 		
-		private var board:BoardEntity;
-		private var controls:Controls;
-		
 		public static var players:Array = [
 			{colour: 0xFFFFFF},
 			{colour: 0xCC5555},
@@ -16,15 +13,8 @@ package {
 		];
 		
 		public function GameWorld() {
-			controls = new Controls;
-			addList(controls.list());
-			
-			board = new BoardEntity;
-			add(board);
+			addList((new Controls).list());
+			add(new BoardEntity);
 		}
-		
-		
-		
 	}
-
 }

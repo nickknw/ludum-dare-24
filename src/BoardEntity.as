@@ -11,34 +11,34 @@ package {
 	
 	public class BoardEntity extends Entity	{
 		
-		public static var cellSize:int = 20;
-		public static var boardWidth:int = 800; // should be multiple of cellSize
-		public static var boardHeight:int = 560; // should be multiple of cellSize
-		public static var heightOffset:int = Main.screenHeight - boardHeight;
+		public static const CELL_SIZE:int = 20;
+		public static const BOARD_WIDTH:int = 800; // should be multiple of cellSize
+		public static const BOARD_HEIGHT:int = 560; // should be multiple of cellSize
+		public static const HEIGHT_OFFSET:int = Main.SCREEN_HEIGHT - BOARD_HEIGHT;
 		
-		private static var borderThickness:int = 1;
-		private static var borderOfEmptyCells:int = 2;
+		private static const BORDER_THICKNESS:int = 1;
+		private static const BORDER_OF_EMPTY_CELLS:int = 2;
 		
 		private var periodicUpdate:int = 0;
-		private var sixTimesASecond:int = Main.framerate / 6;
+		private var sixTimesASecond:int = Main.FRAMERATE / 6;
 		
 		private var boardData:Array;
 		
 		public function BoardEntity() {
-			setHitbox(boardWidth, boardHeight, 0, -heightOffset);
+			setHitbox(BOARD_WIDTH, BOARD_HEIGHT, 0, -HEIGHT_OFFSET);
 			
 			boardData = initializeBoardData();
 
-			var grid:BitmapData = new BitmapData(boardWidth, boardHeight, true, 0x000000);
-			addGraphic(new Stamp(grid, 0, heightOffset));
+			var grid:BitmapData = new BitmapData(BOARD_WIDTH, BOARD_HEIGHT, true, 0x000000);
+			addGraphic(new Stamp(grid, 0, HEIGHT_OFFSET));
 			
 			Input.define("Alternate", Key.CONTROL);
 		}
 		
 		private function initializeBoardData():Array {
 			return Logic.fillBoardWith(
-				boardWidth / cellSize + borderOfEmptyCells,
-				boardHeight / cellSize + borderOfEmptyCells,
+				BOARD_WIDTH / CELL_SIZE + BORDER_OF_EMPTY_CELLS,
+				BOARD_HEIGHT / CELL_SIZE + BORDER_OF_EMPTY_CELLS,
 				function (i:int, j:int):int {
 					// should be empty more than half the time
 					if (Math.random() < .5) {
@@ -71,8 +71,8 @@ package {
 		}
 		
 		private static function determineArrayIndexes(mouseX:int, mouseY:int):Object {
-			var xIndex:int = Math.floor(mouseX / cellSize) + 1;
-			var yIndex:int = Math.floor((mouseY - heightOffset) / cellSize) + 1;
+			var xIndex:int = Math.floor(mouseX / CELL_SIZE) + 1;
+			var yIndex:int = Math.floor((mouseY - HEIGHT_OFFSET) / CELL_SIZE) + 1;
 
 			return { x: xIndex, y: yIndex };
 		}
@@ -82,12 +82,12 @@ package {
 			
 			for (var i:int = 1; i < boardData.length - 1; i++) {
 				for (var j:int = 1; j < boardData[i].length - 1; j++) {
-					var xpos:int = (i - borderThickness) * cellSize + borderThickness,
-						ypos:int = (j - borderThickness) * cellSize + borderThickness,
-						cellInterior:int = cellSize - borderThickness,
+					var xpos:int = (i - BORDER_THICKNESS) * CELL_SIZE + BORDER_THICKNESS,
+						ypos:int = (j - BORDER_THICKNESS) * CELL_SIZE + BORDER_THICKNESS,
+						cellInterior:int = CELL_SIZE - BORDER_THICKNESS,
 						colour:uint = GameWorld.players[boardData[i][j]].colour;
 					
-					Draw.rect(xpos, ypos + heightOffset, cellInterior, cellInterior, colour);
+					Draw.rect(xpos, ypos + HEIGHT_OFFSET, cellInterior, cellInterior, colour);
 				}
 			}
 		}

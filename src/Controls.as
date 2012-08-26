@@ -18,7 +18,7 @@ package
 		
 		public function Controls() 
 		{
-			var backgroundImage:BitmapData = new BitmapData(BoardEntity.boardWidth, BoardEntity.heightOffset, false, 0xFFFFFF);
+			var backgroundImage:BitmapData = new BitmapData(BoardEntity.BOARD_WIDTH, BoardEntity.HEIGHT_OFFSET, false, 0xFFFFFF);
 			background = new Entity(0, 0, new Stamp(backgroundImage));
 			
 			playPauseButton = new Button(0, 0, 40, 40);
