@@ -1,8 +1,24 @@
 package  
 {
+	import net.flashpunk.Sfx;
+	
 	public class Logic 
 	{
-
+		/*
+		[Embed(source = 'sounds/bean.mp3')] private static const BEAN:Class;
+		[Embed(source = 'sounds/sprawawa.mp3')] private static const SPRAWAWA:Class;
+		[Embed(source = 'sounds/zweep.mp3')] private static const ZWEEP:Class;
+		[Embed(source = 'sounds/zwooo.mp3')] private static const ZWOOO:Class;
+		private static const beanSound:Sfx = new Sfx(BEAN);
+		private static const sprawawaSound:Sfx = new Sfx(SPRAWAWA);
+		private static const zweepSound:Sfx = new Sfx(ZWEEP);
+		private static const zwooSound:Sfx = new Sfx(ZWOOO);
+		
+		public static function playMusicUsing(boardData:Array, musicPosition:int):void {
+			//beanSound.play();
+		}
+		*/
+		
 		/**
 		 * Implements rules similar to Conway's Game Of Life and applies them to the
 		 * passed-in grid of data.

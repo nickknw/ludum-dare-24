@@ -18,12 +18,15 @@ package {
 		
 		private static const BORDER_THICKNESS:int = 1;
 		private static const BORDER_OF_EMPTY_CELLS:int = 2;
+		private static const SIX_TIMES_A_SECOND:int = Main.FRAMERATE / 6;
+		private static const ONCE_EVERY_SECOND:int = Main.FRAMERATE;
 		
-		private var periodicUpdate:int = 0;
-		private var sixTimesASecond:int = Main.FRAMERATE / 6;
+		private var gameLogicPeriodicUpdate:int = 0;
+		private var musicLogicPeriodicUpdate:int = 0;
 		private var gameMode:String;
 		
 		private var boardData:Array;
+		private var musicPosition:int;
 		
 		public function BoardEntity(_gameMode:String) {
 			gameMode = _gameMode;
@@ -31,6 +34,7 @@ package {
 			setHitbox(BOARD_WIDTH, BOARD_HEIGHT, 0, -HEIGHT_OFFSET);
 			
 			boardData = initializeBoardData();
+			musicPosition = 0;
 
 			var grid:BitmapData = new BitmapData(BOARD_WIDTH, BOARD_HEIGHT, true, 0x000000);
 			addGraphic(new Stamp(grid, 0, HEIGHT_OFFSET));
@@ -82,13 +86,22 @@ package {
 			}
 			
 			// do grid logic
-			if ((periodicUpdate == 0 && !Main.paused) || Main.stepAheadOneIteration) {
+			if ((gameLogicPeriodicUpdate == 0 && !Main.paused) || Main.stepAheadOneIteration) {
 				boardData = Logic.doIteration(boardData);
 			}
 			if (Main.stepAheadOneIteration) {
 				Main.stepAheadOneIteration = false;
 			}
-			periodicUpdate = (periodicUpdate + 1) % sixTimesASecond;
+			gameLogicPeriodicUpdate = (gameLogicPeriodicUpdate + 1) % SIX_TIMES_A_SECOND;
+			
+			// do music logic
+			/*
+			if (musicLogicPeriodicUpdate == 0) {
+				Logic.playMusicUsing(boardData, musicPosition);
+				musicPosition += 1;
+			}
+			musicLogicPeriodicUpdate = (musicLogicPeriodicUpdate + 1) % ONCE_EVERY_SECOND;
+			*/
 		}
 		
 		private static function determineArrayIndexes(mouseX:int, mouseY:int):Object {
