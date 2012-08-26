@@ -21,10 +21,13 @@ package {
 		
 		private var periodicUpdate:int = 0;
 		private var sixTimesASecond:int = Main.FRAMERATE / 6;
+		private var gameMode:String;
 		
 		private var boardData:Array;
 		
-		public function BoardEntity() {
+		public function BoardEntity(_gameMode:String) {
+			gameMode = _gameMode;
+			
 			setHitbox(BOARD_WIDTH, BOARD_HEIGHT, 0, -HEIGHT_OFFSET);
 			
 			boardData = initializeBoardData();
@@ -36,17 +39,28 @@ package {
 		}
 		
 		private function initializeBoardData():Array {
-			return Logic.fillBoardWith(
-				BOARD_WIDTH / CELL_SIZE + BORDER_OF_EMPTY_CELLS,
-				BOARD_HEIGHT / CELL_SIZE + BORDER_OF_EMPTY_CELLS,
-				function (i:int, j:int):int {
+			var customLogic:Function;
+			if (gameMode == GameModes.BATTLE_ROYALE) {
+				customLogic = function (i:int, j:int):int {
 					// should be empty more than half the time
 					if (Math.random() < .5) {
 						return 0;
 					} else {
 						return Math.floor(Math.random() * GameWorld.players.length);
 					}
-				});
+				};
+			} else if (gameMode == GameModes.SANDBOX) {
+				customLogic = function (i:int, j:int):int {
+					return 0;
+				}
+			} else {
+				throw("Unsupported gameMode");
+			}
+			
+			return Logic.fillBoardWith(
+				BOARD_WIDTH / CELL_SIZE + BORDER_OF_EMPTY_CELLS,
+				BOARD_HEIGHT / CELL_SIZE + BORDER_OF_EMPTY_CELLS,
+				customLogic);
 		}
 		
 		override public function update():void {

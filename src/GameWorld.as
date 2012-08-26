@@ -4,6 +4,8 @@ package {
 		
 	public class GameWorld extends World {
 		
+		public var gameMode:String;
+		
 		public static var players:Array = [
 			{colour: 0xFFFFFF},
 			{colour: 0xCC5555},
@@ -12,9 +14,11 @@ package {
 			{colour: 0x555555}
 		];
 		
-		public function GameWorld() {
+		public function GameWorld(_gameMode:String) {
+			gameMode = _gameMode;
+			
 			addList((new Controls).list());
-			add(new BoardEntity);
+			add(new BoardEntity(gameMode));
 		}
 	}
 }
