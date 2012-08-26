@@ -10,7 +10,7 @@ package {
 		public static var framerate:int = 60;
 		
 		public static var paused:Boolean = false;
-		public static var stepAheadOneIteration = false;
+		public static var stepAheadOneIteration:Boolean = false;
 		
 		public function Main():void {
 			 super(screenWidth, screenHeight, framerate, false);

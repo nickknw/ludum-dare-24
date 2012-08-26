@@ -10,16 +10,34 @@ package
 		 * @param	data 	a two dimensional array holding board data
 		 * @return a two dimensional array holding the modified board data
 		 */
-		public static function doIteration(boardData:Array):Array {
-			for (var i:int = 1; i < boardData.length - 1; i++) {
-				for (var j:int = 1; j < boardData[i].length - 1; j++) {
+		public static function doIteration(boardData:Array):Array {	
+			return fillBoardWith(
+				boardData.length, 
+				boardData[0].length, 
+				function (i:int, j:int):int {
+					// score per enemy eliminated?
 					var neighbours:Array = determineNeighbours(boardData, i, j);
 					var strongestPlayer:Object = getLocallyStrongestPlayer(neighbours);
 					
 					if (strongestPlayer.count < 2 || strongestPlayer.count > 3) {
+						return 0;
+					} else {
+						return strongestPlayer.player;
+					}
+				});
+		}
+		
+		public static function fillBoardWith(numCellsWide:int, numCellsTall:int, customLogic:Function):Array {
+			var boardData:Array = new Array(numCellsWide);
+			for (var i:int = 0; i < boardData.length; i++) {
+				
+				boardData[i] = new Array(numCellsTall);
+				for (var j:int = 0; j < boardData[i].length; j++) {
+					// always fill outside edge with blanks to make logic simpler
+					if (i == 0 || j == 0 || i == boardData.length - 1 || j == boardData[i].length - 1) {
 						boardData[i][j] = 0;
 					} else {
-						boardData[i][j] = strongestPlayer.player;
+						boardData[i][j] = customLogic(i, j);
 					}
 				}
 			}
@@ -28,22 +46,19 @@ package
 		}
 		
 		private static function determineNeighbours(boardData:Array, i:int, j:int):Array {
-			var neighbours:Array = new Array(GameWorld.players.length);
-			for (var index:int = 0; index < neighbours.length; index++) {
-				neighbours[index] = 0;
-			}
+			var neighbours:Array = HelperFunctions.arrayFill(GameWorld.players.length, 0);
 		
-			neighbours[boardData[i - 1][j - 1]] += 1;
+			//neighbours[boardData[i - 1][j - 1]] += 1;
 			neighbours[boardData[i - 1][j]] += 1;
-			neighbours[boardData[i - 1][j + 1]] += 1;
+			//neighbours[boardData[i - 1][j + 1]] += 1;
 
 			neighbours[boardData[i][j - 1]] += 1;
 			// omit current cell
 			neighbours[boardData[i][j + 1]] += 1;
 
-			neighbours[boardData[i + 1][j - 1]] += 1;
+			//neighbours[boardData[i + 1][j - 1]] += 1;
 			neighbours[boardData[i + 1][j]] += 1;
-			neighbours[boardData[i + 1][j + 1]] += 1;
+			//neighbours[boardData[i + 1][j + 1]] += 1;
 			
 			return neighbours;
 		}

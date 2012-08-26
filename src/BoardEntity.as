@@ -7,6 +7,7 @@ package {
 	import net.flashpunk.graphics.Stamp;
 	import net.flashpunk.utils.Draw;
 	import net.flashpunk.utils.Input;
+	import net.flashpunk.utils.Key;
 	
 	public class BoardEntity extends Entity	{
 		
@@ -26,34 +27,33 @@ package {
 		public function BoardEntity() {
 			setHitbox(boardWidth, boardHeight, 0, -heightOffset);
 			
-			// score per enemy eliminated?
-			initializeBoardData();
+			boardData = initializeBoardData();
 
 			var grid:BitmapData = new BitmapData(boardWidth, boardHeight, true, 0x000000);
 			addGraphic(new Stamp(grid, 0, heightOffset));
+			
+			Input.define("Alternate", Key.CONTROL);
 		}
 		
-		private function initializeBoardData():void {
-			boardData = new Array(boardWidth / cellSize + borderOfEmptyCells);
-			for (var i:int = 0; i < boardData.length; i++) {
-				
-				boardData[i] = new Array(boardHeight / cellSize + borderOfEmptyCells);
-				for (var j:int = 0; j < boardData[i].length; j++) {
-					if (i == 0 || j == 0 || i == boardData.length - 1 || j == boardData[i].length - 1) {
-						boardData[i][j] = 0;
-					} else {
-						var player:int = Math.floor(Math.random() * GameWorld.players.length);
-						boardData[i][j] = player;
-					}
-				}
-			}
+		private function initializeBoardData():Array {
+			return Logic.fillBoardWith(
+				boardWidth / cellSize + borderOfEmptyCells,
+				boardHeight / cellSize + borderOfEmptyCells,
+				function (i:int, j:int):int {
+					//return 0;
+					return Math.floor(Math.random() * GameWorld.players.length);
+				});
 		}
 		
 		override public function update():void {
 			// look for clicks
 			if (collidePoint(x, y, world.mouseX, world.mouseY) && Input.mouseDown) {
-				var point = determineArrayIndexes(world.mouseX, world.mouseY);
-				boardData[point.x][point.y] = 1; // only allow one player for now
+				var point:Object = determineArrayIndexes(world.mouseX, world.mouseY);
+				if (Input.check("Alternate")) {
+					boardData[point.x][point.y] = 2;
+				} else {
+					boardData[point.x][point.y] = 1;
+				}
 			}
 			
 			// do grid logic
